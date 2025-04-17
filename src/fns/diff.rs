@@ -45,6 +45,7 @@ fn get_impact_field_name(correlation_field_name: &str) -> &str {
         "were_todo_comments_avoided" => "impact_avoiding_todo_comments",
         "were_technical_design_documents_written" => "impact_writing_technical_design_documents",
         "were_tests_written_like_production_code" => "impact_tests_like_production",
+        "were_nulls_avoided" => "impact_nulls",
         "was_non_english_used" => "impact_using_english",
         "were_requirements_documents_written" => "impact_writing_requirements_documents",
         "were_automated_tests_run" => "impact_automated_tests",

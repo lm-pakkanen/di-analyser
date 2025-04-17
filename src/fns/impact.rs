@@ -1,4 +1,7 @@
-use crate::util::types::{Feedback, QuestionImpactData};
+use crate::util::{
+    types::{Feedback, QuestionImpactData},
+    vars,
+};
 use std::collections::HashMap;
 
 macro_rules! handle_feedback {
@@ -28,6 +31,7 @@ pub fn get_impact_averages(feedbacks: &Vec<Feedback>) -> Vec<QuestionImpactData>
         impact_requiring_document_reviewers,
         impact_avoiding_mutability,
         impact_encoding_mutable_names,
+        impact_nulls,
         impact_using_english,
         impact_code_style,
         impact_code_refactoring,
@@ -59,9 +63,13 @@ pub fn get_impact_averages(feedbacks: &Vec<Feedback>) -> Vec<QuestionImpactData>
             let answer_count: usize = value.len();
             let impact_average: f32 = impact_sum / answer_count as f32;
 
+            let impact_average_rounded: f32 =
+                (impact_average * vars::ROUND_DECIMAL_PLACES_MULTIPLIER as f32).round()
+                    / vars::ROUND_DECIMAL_PLACES_MULTIPLIER as f32;
+
             QuestionImpactData {
                 question: key.to_owned(),
-                impact_average,
+                impact_average: impact_average_rounded,
                 answer_count,
             }
         })
