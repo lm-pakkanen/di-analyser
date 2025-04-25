@@ -19,6 +19,10 @@ pub fn write_diffs_data(data: &Vec<QuestionDataDiffs>) {
     write_data(&format!("{}/diffs.json", OUT_DIR), data);
 }
 
+pub fn write_impact_average(average: f64) {
+    write_data(&format!("{}/impact_average.json", OUT_DIR), &vec![average]);
+}
+
 fn write_data<T: Serialize>(filename: &str, data: &Vec<T>) {
     create_dir_all(OUT_DIR).unwrap();
     let file: File = File::create(filename).unwrap();

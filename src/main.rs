@@ -4,8 +4,8 @@ mod util;
 use crate::fns::csv::read_csv;
 use fns::{
     diff::calculate_diffs,
-    fs::{write_correlation_data, write_diffs_data, write_impact_data},
-    impact::get_impact_averages,
+    fs::{write_correlation_data, write_diffs_data, write_impact_average, write_impact_data},
+    impact::{get_impact_average, get_impact_averages},
     rank::calculate_rankings,
     util::assign_ids,
 };
@@ -21,10 +21,12 @@ fn main() {
 
             let rankings: Vec<QuestionCorrelationData> = calculate_rankings(&feedbacks);
             let impact_averages: Vec<QuestionImpactData> = get_impact_averages(&feedbacks);
+            let impact_average: f64 = get_impact_average(&impact_averages);
             let diffs: Vec<QuestionDataDiffs> = calculate_diffs(&rankings, &impact_averages);
 
             write_correlation_data(&rankings);
             write_impact_data(&impact_averages);
+            write_impact_average(impact_average);
             write_diffs_data(&diffs);
         }
         Err(err) => {

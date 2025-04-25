@@ -77,3 +77,15 @@ pub fn get_impact_averages(feedbacks: &Vec<Feedback>) -> Vec<QuestionImpactData>
     impact_data.sort_by(|a, b| b.impact_average.partial_cmp(&a.impact_average).unwrap());
     impact_data
 }
+
+pub fn get_impact_average(data: &Vec<QuestionImpactData>) -> f64 {
+    let impacts_sum: f64 = data.iter().map(|x| x.impact_average as f64).sum();
+    let question_count: usize = data.len();
+    let impact_average: f64 = impacts_sum / question_count as f64;
+
+    let impact_average_rounded: f64 =
+        (impact_average * vars::ROUND_DECIMAL_PLACES_MULTIPLIER as f64).round()
+            / vars::ROUND_DECIMAL_PLACES_MULTIPLIER as f64;
+
+    impact_average_rounded
+}
